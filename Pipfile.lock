@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "434a19c81553749265ce52c439e622488e9d08605378420af56bd447cb7e6145"
+            "sha256": "e4f0caccdd7a338f77d6ffa6809ad687044fb906857eae6f58d3c1c280bd5b8a"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -31,14 +31,6 @@
             ],
             "version": "==0.9.1"
         },
-        "inflect": {
-            "hashes": [
-                "sha256:053dabafaebc41375361cea2cbaea52f91c7d5bd30e079847ee4e4e49739d41b",
-                "sha256:def6f3791be9181f0c01e0bf5949304007ec6e04c6674fbef7cc49c657b8a9a5"
-            ],
-            "index": "pypi",
-            "version": "==4.1.0"
-        },
         "pprintpp": {
             "hashes": [
                 "sha256:b6b4dcdd0c0c0d75e4d7b2f21a9e933e5b2ce62b26e1a54537f9651ae5a5c01d",
@@ -61,14 +53,6 @@
             ],
             "index": "pypi",
             "version": "==3.0.3"
-        },
-        "trove-classifiers": {
-            "hashes": [
-                "sha256:14b331541cbfc63bab496809bbb8c09c86ffb6f5c5a0265556480e4f19f5827c",
-                "sha256:d3fa8d413853348ae97bb2a60f332083ee2551bf60baf34c459da2de99148f3e"
-            ],
-            "index": "pypi",
-            "version": "==2020.6.20"
         },
         "typing-extensions": {
             "hashes": [

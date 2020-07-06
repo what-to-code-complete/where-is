@@ -8,8 +8,6 @@ mypy = "*"
 
 [packages]
 rich = "*"
-trove-classifiers = "*"
-inflect = "*"
 
 [requires]
 python_version = "3.8"
