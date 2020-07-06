@@ -15,6 +15,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import json
 from typing import List, Union, Dict
+from pathlib import Path
 
 
 class Entry:
@@ -23,5 +24,17 @@ class Entry:
 
 
 class Database:
-    def __init__(self, location: str) -> None:
+    def __init__(self, location: Path) -> None:
+        """Database initializer.
+
+        Args:
+            location: The location where the database is stored.
+        """
         self.location = location
+        self._check()
+
+    def _check(self) -> None:
+        if not self.location.exists():
+            raise FileNotFoundError(f"Location '{self.location}' does not exist.")
+        if not self.location.is_dir():
+            raise NotADirectoryError(f"Location '{self.location}' must be a folder, not a file.")
