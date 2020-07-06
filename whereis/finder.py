@@ -13,3 +13,15 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
+import json
+from typing import List, Union, Dict
+
+
+class Entry:
+    def __init__(self, raw: Dict[str, Union[str, List[str]]]) -> None:
+        self.raw = raw
+
+
+class Database:
+    def __init__(self, location: str) -> None:
+        self.location = location
