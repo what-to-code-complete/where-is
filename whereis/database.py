@@ -20,6 +20,23 @@ import os
 from whereis import utils
 
 
+class Entry:
+    def __init__(self, name: str, *locations: List[str]) -> None:
+        self._name = name
+        self._locations = locations
+
+    @property
+    def name(self) -> str:
+        return self._name
+
+    @property
+    def locations(self) -> List[Path]:
+        return [Path(os.path.join(*location)) for location in self._locations]
+
+    def __repr__(self) -> str:
+        return f"<{self.__class__.__name__} object: name={self.name} locations={self.locations}>"
+
+
 class Database:
     def __init__(self, location: Path) -> None:
         self._location = location
@@ -27,6 +44,10 @@ class Database:
     @property
     def location(self) -> Path:
         return self._location
+
+    @property
+    def entries(self):
+        pass
 
     def __repr__(self) -> str:
         return f"<{self.__class__.__name__} object: location={self.location}>"
