@@ -61,7 +61,17 @@ class Database:
         return self._location
 
     @property
+    def _database(self) -> List[Dict[str, Union[str, List[List[str]]]]]:
+        return [json.loads(entry.read_text()) for entry in self.location.iterdir()]
+
+    @property
     def entries(self) -> List[Entry]:
+        pass
+
+    def add(self, entry: Entry) -> None:
+        pass
+
+    def remove(self, entry: Entry) -> None:
         pass
 
     def __repr__(self) -> str:
