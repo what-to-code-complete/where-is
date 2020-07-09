@@ -15,7 +15,38 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 from argparse import ArgumentParser, Namespace
 from typing import List
+from whereis import Database, levels, Entry
 import sys
+from rich.table import Table
+from rich import print
+
+_database: Database = Database()
+
+
+def find_config(name: str):
+    table: Table = Table(title="Config files found")
+    table.add_column("Locations")
+    table.add_column("Exists")
+    while True:
+        try:
+            entry: Entry = next(
+                iter([entry for entry in _database.entries if entry.name == name])
+            )
+            break
+        except StopIteration:
+            levels.error(f"Couldn't find the entry '{name}'.")
+            return
+        except NotADirectoryError:
+            levels.info("Database doesn't exist, creating.")
+            _database.create()
+            continue
+    # noinspection PyUnboundLocalVariable
+    for location, exists in entry.locations_exists().items():
+        table.add_row(
+            f"[green bold]{location}", str(exists) if exists else f"[red bold]{exists}"
+        )
+
+    print(table)
 
 
 def parser() -> ArgumentParser:
@@ -42,3 +73,5 @@ def parse_args(argparser: ArgumentParser, args: List[str] = None) -> Namespace:
 
 def main(args: List[str] = None) -> None:
     args = args or sys.argv[1:]
+    arguments: Namespace = parse_args(parser(), args)
+    return find_config(arguments.name)
