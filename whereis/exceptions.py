@@ -21,3 +21,7 @@ class WhereIsException(Exception):
 
 class EntryExistsError(WhereIsException):
     """Raised when a database entry exists."""
+
+
+class EntryDoesNotExistError(WhereIsException):
+    """Raised when a database entry doesn't exist."""
