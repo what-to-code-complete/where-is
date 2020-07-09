@@ -13,9 +13,3 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
-import os
-from typing import List
-
-
-def absolute_listdir(directory: str = ".") -> List[str]:
-    return [os.path.join(directory, path) for path in os.listdir(directory)]
