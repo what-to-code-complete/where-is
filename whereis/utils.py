@@ -13,3 +13,28 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
+from pathlib import Path
+import platform
+from typing import Dict
+import os
+
+
+def config_folder(system: str = platform.system()) -> Path:
+    """Gets the config folder of each operating system.
+
+    Args:
+        system: The operating system to retrieve a config folder from.
+
+    Returns:
+        A path object that points to where a config folder is
+        (if system is not in Linux, Mac, Windows it will default to Linux)
+    """
+    switch_case: Dict[str, Path] = {
+        "Linux": Path().home() / ".config",
+        "Mac": Path().home() / "Library" / "Preferences",
+        "Windows": Path(
+            str(os.getenv("APPDATA"))
+        ),  # in case the os is other than windows
+    }
+
+    return switch_case.get(system, switch_case["Linux"])
