@@ -90,7 +90,10 @@ class Database:
         new_entry.write_text(entry.to_json)
 
     def remove(self, entry: Entry) -> None:
-        pass
+        if entry not in self.entries:
+            raise exceptions.EntryDoesNotExistError("The database entry must exist.")
+        entry_to_delete: Path = self.location / f"{entry.name}.json"
+        entry_to_delete.unlink()
 
     def __repr__(self) -> str:
         return f"<{self.__class__.__name__} object: location={self.location}>"
