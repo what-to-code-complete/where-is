@@ -13,11 +13,42 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
+from typing import Literal, Dict
 from rich.console import Console
 import sys
 
 _console: Console = Console(file=sys.stderr)
+
+
+def _levels(
+    message: str,
+    level: Literal["info", "success", "warn", "error"],
+    no_icon: bool = False,
+) -> None:
+    """An easier way to get levels.
+
+    Args:
+        message: The message.
+        level: The level.
+        no_icon: Does the message have an icon or not?
+
+    Returns:
+        Nothing.
+    """
+    to_message: Dict[str, str] = {
+        "info": " [dark_blue]{icon} [blue]{line}",
+        "success": " [dark_green]{icon} [green4]{line}",
+        "warn": " [yellow]{icon} [yellow3]{line}",
+        "error": " [dark_red]{icon} [red]{line}",
+    }
+    icon: Dict[str, str] = {"info": "🛈", "success": "✓", "warn": "⚠", "error": "✗"}
+
+    for line in message.splitlines():
+        return _console.print(
+            to_message[level].format(
+                icon="" if no_icon else f"[[{icon[level]}]]", line=line
+            )
+        )
 
 
 def info(message: str, no_icon: bool = False) -> None:
@@ -30,8 +61,7 @@ def info(message: str, no_icon: bool = False) -> None:
     Returns:
         Nothing.
     """
-    for line in message.splitlines():
-        _console.print(f" [dark_blue]{'' if no_icon else '[[🛈]]'} [blue]{line}")
+    return _levels(message, "info", no_icon)
 
 
 def success(message: str, no_icon: bool = False) -> None:
@@ -44,8 +74,7 @@ def success(message: str, no_icon: bool = False) -> None:
     Returns:
         Nothing.
     """
-    for line in message.splitlines():
-        _console.print(f" [dark_green]{'' if no_icon else '[[✓]]'} [green4]{line}")
+    return _levels(message, "success", no_icon)
 
 
 def warn(message: str, no_icon: bool = False) -> None:
@@ -58,8 +87,7 @@ def warn(message: str, no_icon: bool = False) -> None:
     Returns:
         Nothing.
     """
-    for line in message.splitlines():
-        _console.print(f" [yellow]{'' if no_icon else '[[⚠]]'} [yellow3]{line}")
+    return _levels(message, "warn", no_icon)
 
 
 def error(message: str, no_icon: bool = False) -> None:
@@ -72,8 +100,7 @@ def error(message: str, no_icon: bool = False) -> None:
     Returns:
         Nothing.
     """
-    for line in message.splitlines():
-        _console.print(f" [dark_red]{'' if no_icon else '[[✗]]'} [red]{line}")
+    return _levels(message, "error", no_icon)
 
 
 def debug(message: str) -> None:
