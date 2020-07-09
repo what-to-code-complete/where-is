@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import json
-from typing import List, Union, Dict
+from typing import List, Dict, Union, Optional, TextIO
 from pathlib import Path
 import os
 from whereis import utils
@@ -55,22 +55,13 @@ class Database:
 
     @property
     def location(self) -> Path:
+        if not self._location.is_dir() or not self._location.exists():
+            # keyword being 'folder'
+            raise NotADirectoryError("The database folder must exist!")
         return self._location
 
     @property
     def entries(self) -> List[Entry]:
-        pass
-
-    def connect(self) -> None:
-        pass
-
-    def disconnect(self) -> None:
-        pass
-
-    def __enter__(self) -> None:
-        pass
-
-    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
         pass
 
     def __repr__(self) -> str:
