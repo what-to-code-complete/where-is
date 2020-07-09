@@ -33,6 +33,18 @@ class Entry:
     def locations(self) -> List[Path]:
         return [Path(os.path.join(*location)) for location in self._locations]
 
+    def add(self) -> None:
+        pass
+
+    def remove(self) -> None:
+        pass
+
+    def exists(self) -> bool:
+        pass
+
+    def __eq__(self, other) -> bool:
+        return self.name == other.name and self.locations == other.locations
+
     def __repr__(self) -> str:
         return f"<{self.__class__.__name__} object: name={self.name} locations={self.locations}>"
 
