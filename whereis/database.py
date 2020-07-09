@@ -17,7 +17,7 @@ import json
 from typing import List, Dict, Union, Optional, TextIO
 from pathlib import Path
 import os
-from whereis import exceptions
+from whereis import exceptions, utils
 
 
 class Entry:
@@ -61,7 +61,7 @@ class Entry:
 
 
 class Database:
-    def __init__(self, location: Path) -> None:
+    def __init__(self, location: Path = utils.config_folder()) -> None:
         self._location = location
 
     @property
