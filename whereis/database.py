@@ -24,6 +24,7 @@ class Entry:
     def __init__(self, name: str, *locations: List[str]) -> None:
         self._name = name
         self._locations = locations
+        self._database: Database = Database()
 
     @property
     def name(self) -> str:
@@ -45,13 +46,13 @@ class Entry:
         return json.dumps(self.to_dict)
 
     def add(self) -> None:
-        pass
+        return self._database.add(self)
 
     def remove(self) -> None:
-        pass
+        return self._database.remove(self)
 
     def exists(self) -> bool:
-        pass
+        return self in self._database.entries
 
     def __eq__(self, other) -> bool:
         return self.name == other.name and self.locations == other.locations
