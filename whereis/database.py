@@ -95,6 +95,14 @@ class Entry:
         """
         return self in self._database.entries
 
+    def locations_exists(self) -> Dict[Path, bool]:
+        """Does each location exist?
+
+        Returns:
+            A dictionary of locations and whether that location exists.
+        """
+        return {location: location.exists() for location in self.locations}
+
     def __eq__(self, other) -> bool:
         try:
             return self.name == other.name and self.locations == other.locations
