@@ -33,6 +33,17 @@ class Entry:
     def locations(self) -> List[Path]:
         return [Path(os.path.join(*location)) for location in self._locations]
 
+    @property
+    def to_dict(self) -> Dict[str, Union[str, List[List[str]]]]:
+        return {
+            "name": self.name,
+            "locations": self._locations,  # type: ignore
+        }
+
+    @property
+    def to_json(self) -> str:
+        return json.dumps(self.to_dict)
+
     def add(self) -> None:
         pass
 
@@ -73,7 +84,8 @@ class Database:
         return [self._entry_from_json(raw_entry) for raw_entry in self._database]
 
     def add(self, entry: Entry) -> None:
-        pass
+        new_entry: Path = self.location / f"{entry.name}.json"
+        new_entry.write_text(entry.to_json)
 
     def remove(self, entry: Entry) -> None:
         pass
