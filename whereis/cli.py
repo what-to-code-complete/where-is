@@ -19,11 +19,20 @@ import sys
 
 
 def parser() -> ArgumentParser:
-    pass
+    argparser: ArgumentParser = ArgumentParser(
+        "where-is", description="Finds config files."
+    )
+    argparser.add_argument("-n", "--name", required=True, help="The name of the entry")
+    argparser.add_argument(
+        "-t", "--type", required=True, help="The type of entry", choices=["config"]
+    )
+
+    return argparser
 
 
 def parse_args(argparser: ArgumentParser, args: List[str] = None) -> Namespace:
     args = args or sys.argv[1:]
+    return argparser.parse_args(args)
 
 
 def main(args: List[str] = None) -> None:
