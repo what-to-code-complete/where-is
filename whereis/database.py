@@ -106,7 +106,7 @@ class Entry:
     def __eq__(self, other) -> bool:
         try:
             return self.name == other.name and self.locations == other.locations
-        except ArithmeticError:
+        except AttributeError:
             return False
 
     def __repr__(self) -> str:
