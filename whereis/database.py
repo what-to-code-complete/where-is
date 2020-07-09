@@ -64,9 +64,13 @@ class Database:
     def _database(self) -> List[Dict[str, Union[str, List[List[str]]]]]:
         return [json.loads(entry.read_text()) for entry in self.location.iterdir()]
 
+    @staticmethod
+    def _entry_from_json(raw_entry: Dict[str, Union[str, List[List[str]]]]) -> Entry:
+        return Entry(raw_entry["name"], *raw_entry["locations"])  # type: ignore
+
     @property
     def entries(self) -> List[Entry]:
-        pass
+        return [self._entry_from_json(raw_entry) for raw_entry in self._database]
 
     def add(self, entry: Entry) -> None:
         pass
