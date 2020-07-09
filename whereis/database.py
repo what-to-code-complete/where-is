@@ -16,25 +16,17 @@
 import json
 from typing import List, Union, Dict
 from pathlib import Path
-
-
-class Entry:
-    def __init__(self, raw: Dict[str, Union[str, List[str]]]) -> None:
-        self.raw = raw
+import os
+from whereis import utils
 
 
 class Database:
     def __init__(self, location: Path) -> None:
-        """Database initializer.
+        self._location = location
 
-        Args:
-            location: The location where the database is stored.
-        """
-        self.location = location
-        self._check()
+    @property
+    def location(self) -> Path:
+        return self._location
 
-    def _check(self) -> None:
-        if not self.location.exists():
-            raise FileNotFoundError(f"Location '{self.location}' does not exist.")
-        if not self.location.is_dir():
-            raise NotADirectoryError(f"Location '{self.location}' must be a folder, not a file.")
+    def __repr__(self) -> str:
+        return f"<{self.__class__.__name__} object: location={self.location}>"
