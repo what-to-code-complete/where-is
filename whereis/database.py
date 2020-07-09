@@ -17,7 +17,7 @@ import json
 from typing import List, Dict, Union, Optional, TextIO
 from pathlib import Path
 import os
-from whereis import utils
+from whereis import exceptions
 
 
 class Entry:
@@ -84,6 +84,8 @@ class Database:
         return [self._entry_from_json(raw_entry) for raw_entry in self._database]
 
     def add(self, entry: Entry) -> None:
+        if entry in self.entries:
+            raise exceptions.EntryExistsError("The database entry exists.")
         new_entry: Path = self.location / f"{entry.name}.json"
         new_entry.write_text(entry.to_json)
 
