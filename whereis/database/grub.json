@@ -1,0 +1,6 @@
+{
+  "name": "grub",
+  "locations": [
+    ["etc", "default", "grub"]
+  ]
+}

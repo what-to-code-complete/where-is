@@ -18,6 +18,7 @@ from typing import List, Dict, Union
 from pathlib import Path
 import os
 from whereis import exceptions, utils
+import shutil
 
 
 class Entry:
@@ -45,10 +46,18 @@ class Entry:
     def locations(self) -> List[Path]:
         """All of the locations an entry has.
 
+        Notes:
+            The paths can be formatted.
+            Here is the following format map:
+                $HOME: <your home folder>
+
         Returns:
             All of the locations an entry has.
         """
-        return [Path(os.path.join(*location)) for location in self._locations]
+        return [
+            Path(self._format_path(os.path.join(*location)))
+            for location in self._locations
+        ]
 
     @property
     def to_dict(self) -> Dict[str, Union[str, List[List[str]]]]:
@@ -70,6 +79,19 @@ class Entry:
             Converted to json entry object.
         """
         return json.dumps(self.to_dict)
+
+    @staticmethod
+    def _format_path(path: str) -> str:
+        """Formats a path.
+
+        Args:
+            path: The path to format.
+
+        Returns:
+            The formatted path.
+        """
+        format_map: Dict[str, str] = {"$HOME": str(Path().home())}
+        return path.format(**format_map)
 
     def add(self) -> None:
         """Adds the entry object to the database.
@@ -121,6 +143,7 @@ class Database:
             location: The location where the database is. Defaults to the config folder.
         """
         self._location = location
+        self._not_exists_ok: bool = False
 
     @property
     def location(self) -> Path:
@@ -132,7 +155,9 @@ class Database:
         Raises:
             NotADirectoryError: When the database folder doesn't exist.
         """
-        if not self._location.is_dir() or not self._location.exists():
+        if (
+            not self._location.is_dir() or not self._location.exists()
+        ) and not self._not_exists_ok:
             # keyword being 'folder'
             raise NotADirectoryError("The database folder must exist!")
         return self._location
@@ -204,6 +229,18 @@ class Database:
             raise exceptions.EntryDoesNotExistError("The database entry must exist.")
         entry_to_delete: Path = self.location / f"{entry.name}.json"
         entry_to_delete.unlink()
+
+    def create(self) -> None:
+        """Creates the database if it doesn't exist.
+
+        Returns:
+            Nothing.
+        """
+        sample_db: Path = Path(__file__).parent / "database"
+        self._not_exists_ok = True
+        Path(self.location).mkdir()
+        for path in sample_db.iterdir():
+            shutil.copyfile(str(path), str(self.location / path.name))
 
     def __repr__(self) -> str:
         return f"<{self.__class__.__name__} object: location={self.location}>"
