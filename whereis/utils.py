@@ -30,11 +30,12 @@ def config_folder(system: str = platform.system()) -> Path:
         (if system is not in Linux, Mac, Windows it will default to Linux)
     """
     switch_case: Dict[str, Path] = {
-        "Linux": Path().home() / ".config",
-        "Mac": Path().home() / "Library" / "Preferences",
+        "Linux": Path().home() / ".config" / "where-is",
+        "Mac": Path().home() / "Library" / "Preferences" / "where-is",
         "Windows": Path(
-            str(os.getenv("APPDATA"))
-        ),  # in case the os is other than windows
+            str(os.getenv("APPDATA"))  # in case the os is other than windows
+        )
+        / "where-is",
     }
 
     return switch_case.get(system, switch_case["Linux"])
