@@ -24,7 +24,12 @@ def parser() -> ArgumentParser:
     )
     argparser.add_argument("-n", "--name", required=True, help="The name of the entry")
     argparser.add_argument(
-        "-t", "--type", required=True, help="The type of entry", choices=["config"]
+        "-t",
+        "--type",
+        required=True,
+        help="The type of entry",
+        choices=["config"],
+        metavar="TYPE",
     )
 
     return argparser
