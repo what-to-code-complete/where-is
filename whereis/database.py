@@ -58,7 +58,19 @@ class Database:
         return self._location
 
     @property
-    def entries(self):
+    def entries(self) -> List[Entry]:
+        pass
+
+    def connect(self) -> None:
+        pass
+
+    def disconnect(self) -> None:
+        pass
+
+    def __enter__(self) -> None:
+        pass
+
+    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
         pass
 
     def __repr__(self) -> str:
