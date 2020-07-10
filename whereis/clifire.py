@@ -56,7 +56,7 @@ class EntryCLI:
         try:
             entry.add()
         except exceptions.EntryExistsError as error:
-            levels.error(f"The specified entry exists: {error}")
+            levels.error(f"The specified entry exists: [italic]{error}")
             return
         levels.success(f"Successfully added entry to database.")
 
