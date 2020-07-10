@@ -90,7 +90,11 @@ class Entry:
         Returns:
             The formatted path.
         """
-        format_map: Dict[str, str] = {"HOME": str(Path().home())}
+        format_map: Dict[str, str] = {
+            "HOME": str(Path().home()),
+            "WHEREIS_CONFIG": str(utils.config_folder()),
+            "CONFIG_FOLDER": str(utils.config_folder() / ".."),
+        }
         try:
             return path.format(**format_map)
         except (KeyError, IndexError, ValueError):
