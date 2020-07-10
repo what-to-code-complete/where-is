@@ -13,14 +13,17 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
-from whereis import Database, Entry, levels, exceptions
+from whereis import Database, Entry, levels, exceptions, utils
 import fire
 from typing import List
+from pathlib import Path
 
 
 class EntryCLI:
-    def __init__(self) -> None:
-        self._database: Database = Database()
+    """Provides access to the database."""
+
+    def __init__(self, location: str = str(utils.config_folder())) -> None:
+        self._database: Database = Database(Path(location))
 
     @staticmethod
     def _comma_delimit_to_list(comma_delimit: str) -> List[str]:
@@ -65,11 +68,5 @@ class FindCLI:
     pass
 
 
-class Nest:
-    def __init__(self) -> None:
-        self.entry: EntryCLI = EntryCLI()
-        self.find: FindCLI = FindCLI()
-
-
 def main() -> None:
-    fire.Fire(Nest())
+    fire.Fire({"entry": EntryCLI()})
