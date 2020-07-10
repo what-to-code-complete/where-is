@@ -13,5 +13,37 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
-from whereis.database import *
-from whereis import __main__, cli, clifire
+from whereis import Database
+import fire
+from typing import List
+
+
+class EntryCLI:
+    def __init__(self) -> None:
+        self._database: Database = Database()
+
+    def add(self, name: str, *locations: List[str]) -> None:
+        """Adds an entry to the database.
+
+        Args:
+            name: The name of the entry to add.
+            *locations: The locations to add to the database.
+
+        Returns:
+            Nothing.
+        """
+        print(name, locations)
+
+
+class FindCLI:
+    pass
+
+
+class Nest:
+    def __init__(self) -> None:
+        self.entry: EntryCLI = EntryCLI()
+        self.find: FindCLI = FindCLI()
+
+
+def main() -> None:
+    fire.Fire(Nest())

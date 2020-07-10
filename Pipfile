@@ -9,6 +9,7 @@ mypy = "*"
 [packages]
 rich = "*"
 jsonschema = "*"
+fire = "*"
 
 [requires]
 python_version = "3.8"
