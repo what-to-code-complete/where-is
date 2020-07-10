@@ -31,7 +31,7 @@ class Entry:
         """
         self._name = name
         self._locations = locations
-        self._database: Database = Database()
+        self.database: Database = Database()
 
     @property
     def name(self) -> str:
@@ -106,7 +106,7 @@ class Entry:
         Returns:
             Nothing.
         """
-        return self._database.add(self)
+        return self.database.add(self)
 
     def remove(self) -> None:
         """Removes the entry object from the database.
@@ -114,7 +114,7 @@ class Entry:
         Returns:
             Nothing.
         """
-        return self._database.remove(self)
+        return self.database.remove(self)
 
     def exists(self) -> bool:
         """Checks if the entry object exists in the database.
@@ -122,7 +122,7 @@ class Entry:
         Returns:
             True if the entry object exists, else False.
         """
-        return self in self._database.entries
+        return self in self.database.entries
 
     def locations_exists(self) -> Dict[Path, bool]:
         """Does each location exist?
