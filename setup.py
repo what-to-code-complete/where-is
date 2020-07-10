@@ -24,11 +24,8 @@ setuptools.setup(
     author="ALinuxPerson",
     author_email="micheal02052007@gmail.com",
     python_requires=">=3.6.0",
-    packages=setuptools.find_packages(exclude=["tests", "*.tests", "*.tests.*", "tests.*"]),
-    # If your package is a single module, use this instead of 'packages':
-    # py_modules=['mypackage'],
-
-    # entry_points={
-    #     'console_scripts': ['mycli=mymodule:cli'],
-    # },
+    packages=setuptools.find_packages(
+        exclude=["tests", "*.tests", "*.tests.*", "tests.*"]
+    ),
+    entry_points={"console_scripts": ["where-is=whereis:__main__.main"],},
 )
