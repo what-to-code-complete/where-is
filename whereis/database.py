@@ -49,13 +49,13 @@ class Entry:
         Notes:
             The paths can be formatted.
             Here is the following format map:
-                $HOME: <your home folder>
+                {HOME}: <your home folder>
 
         Returns:
             All of the locations an entry has.
         """
         return [
-            Path(self._format_path(os.path.join(*location)))
+            Path(self._format_path(os.path.join(os.path.sep, *location)))
             for location in self._locations
         ]
 
@@ -90,8 +90,11 @@ class Entry:
         Returns:
             The formatted path.
         """
-        format_map: Dict[str, str] = {"$HOME": str(Path().home())}
-        return path.format(**format_map)
+        format_map: Dict[str, str] = {"HOME": str(Path().home())}
+        try:
+            return path.format(**format_map)
+        except (KeyError, IndexError, ValueError):
+            raise KeyError(f"Format map not supported for path '{path}'.") from None
 
     def add(self) -> None:
         """Adds the entry object to the database.
@@ -110,7 +113,7 @@ class Entry:
         return self._database.remove(self)
 
     def exists(self) -> bool:
-        """Checks if the entry object exists.
+        """Checks if the entry object exists in the database.
 
         Returns:
             True if the entry object exists, else False.
@@ -164,7 +167,7 @@ class Database:
 
     @property
     def _database(self) -> List[Dict[str, Union[str, List[List[str]]]]]:
-        """All of the database in raw.
+        """All of the database entries in raw, waiting to be processed.
 
         Returns:
             A list of dictionaries if the file owning that dictionary's suffix is '.json'.

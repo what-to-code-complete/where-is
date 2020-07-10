@@ -24,9 +24,10 @@ _database: Database = Database()
 
 
 def find_config(name: str):
-    table: Table = Table(title="Config files found")
+    table: Table = Table(title="[bold]Config files found")
     table.add_column("Locations")
     table.add_column("Exists")
+    table.add_column("Is a file?")
     while True:
         try:
             entry: Entry = next(
@@ -40,11 +41,18 @@ def find_config(name: str):
             levels.info("Database doesn't exist, creating.")
             _database.create()
             continue
-    # noinspection PyUnboundLocalVariable
-    for location, exists in entry.locations_exists().items():
-        table.add_row(
-            f"[green bold]{location}", str(exists) if exists else f"[red bold]{exists}"
-        )
+    try:
+        # noinspection PyUnboundLocalVariable
+        for location, exists in entry.locations_exists().items():
+            table.add_row(
+                f"[green4 bold]{location}",
+                f"[green4 bold]{exists}" if exists else f"[red bold]{exists}",
+                f"[blue]{location.is_file()}" if exists else "[blue italic]Unknown",
+            )
+    except KeyError as error:
+        levels.error(f"Couldn't parse path:")
+        levels.error(f"[bold]{error.__class__.__name__}:[/] [italic]{error}")
+        return
 
     print(table)
 
@@ -57,9 +65,9 @@ def parser() -> ArgumentParser:
     argparser.add_argument(
         "-t",
         "--type",
-        required=True,
         help="The type of entry",
         choices=["config"],
+        default="config",
         metavar="TYPE",
     )
 
