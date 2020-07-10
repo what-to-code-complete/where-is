@@ -15,64 +15,6 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 from whereis import Database, Entry, levels, exceptions, utils
 import fire
-from typing import List
-from pathlib import Path
-
-
-class EntryCLI:
-    """Provides access to the database."""
-
-    def __init__(self, location: str = str(utils.config_folder())) -> None:
-        while True:
-            try:
-                self._database: Database = Database(Path(location))
-                break
-            except NotADirectoryError:
-                levels.info("Creating database folder.")
-                self._database.create()
-                continue
-
-    @staticmethod
-    def _comma_delimit_to_list(comma_delimit: str) -> List[str]:
-        """Converts a comma-delimited string to a list fit for being passed to Entry.*locations.
-
-        Args:
-            comma_delimit: The comma-delimited string.
-
-        Returns:
-            A converted comma-delimited string.
-        """
-        return comma_delimit.split(",")
-
-    def add(self, name: str, *locations: str) -> None:
-        """Adds an entry to the database.
-
-        Notes:
-            Note that you SHOULD NOT use this method to add entries to the database. You should use the better method,
-            create the entry from scratch using a JSON.
-
-        Args:
-            name: The name of the entry to add.
-            *locations: The locations to add to the database.
-
-        Returns:
-            Nothing.
-        """
-        converted_locations: List[List[str]] = [
-            self._comma_delimit_to_list(location) for location in locations
-        ]
-        entry: Entry = Entry(name, *converted_locations)
-        entry.database = self._database
-        try:
-            entry.add()
-        except exceptions.EntryExistsError as error:
-            levels.error(f"The specified entry exists: [italic]{error}")
-            return
-        levels.success(f"Successfully added entry to database.")
-
-
-class FindCLI:
-    pass
 
 
 def main() -> None:
