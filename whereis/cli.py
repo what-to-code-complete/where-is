@@ -50,8 +50,10 @@ def find_config(name: str):
                 f"[blue]{location.is_file()}" if exists else "[blue italic]Unknown",
             )
     except KeyError as error:
-        levels.error(f"Couldn't parse path:")
-        levels.error(f"[bold]{error.__class__.__name__}:[/] [italic]{error}")
+        levels.error(
+            f"Couldn't parse path:\n"
+            f"[bold]{error.__class__.__name__}:[/] [italic]{error}"
+        )
         return
 
     print(table)

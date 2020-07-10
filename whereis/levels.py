@@ -44,7 +44,7 @@ def _levels(
     icon: Dict[str, str] = {"info": "🛈", "success": "✓", "warn": "⚠", "error": "✗"}
 
     for line in message.splitlines():
-        return _console.print(
+        _console.print(
             to_message[level].format(
                 icon="" if no_icon else f"[[{icon[level]}]]", line=line
             )
