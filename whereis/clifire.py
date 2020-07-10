@@ -23,7 +23,14 @@ class EntryCLI:
     """Provides access to the database."""
 
     def __init__(self, location: str = str(utils.config_folder())) -> None:
-        self._database: Database = Database(Path(location))
+        while True:
+            try:
+                self._database: Database = Database(Path(location))
+                break
+            except NotADirectoryError:
+                levels.info("Creating database folder.")
+                self._database.create()
+                continue
 
     @staticmethod
     def _comma_delimit_to_list(comma_delimit: str) -> List[str]:
