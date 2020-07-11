@@ -92,5 +92,36 @@ def find(name: str, database_location: str = str(utils.config_folder())) -> None
     print(table)
 
 
+def show_version() -> None:
+    pass
+
+
+def cli(
+    name: str = None, database_location: str = None, version: bool = False,
+) -> None:
+    """Finds configuration files.
+
+    Args:
+        name: The name of the entry to search for.
+        database_location: The database to search for the entry. Defaults to the where-is config folder.
+        version: Show this program's version number then exit.
+
+    Returns:
+        Nothing.
+    """
+    if version:
+        return show_version()
+    else:
+        if not name:
+            if database_location:
+                levels.error("You need to pass the '-n' or '--name' argument first!")
+            else:
+                levels.info(
+                    "What do you want to do? Pass the '-h' or '--help' argument to get more info."
+                )
+            return
+        find(name, database_location or str(utils.config_folder()))
+
+
 def main() -> None:
-    fire.Fire(find)
+    fire.Fire(cli)
