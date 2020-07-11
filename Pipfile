@@ -7,9 +7,10 @@ verify_ssl = true
 mypy = "*"
 
 [packages]
-rich = "*"
+rich = "==3.1.0"
 jsonschema = "*"
 fire = "*"
+mypy = "==0.782"
 
 [requires]
 python_version = "3.8"
