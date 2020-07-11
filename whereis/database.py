@@ -191,8 +191,14 @@ class Database:
 
         Returns:
             An entry object.
+
+        Raises:
+            KeyError: If the raw entry doesn't follow the json schema.
         """
-        return Entry(raw_entry["name"], *raw_entry["locations"])  # type: ignore
+        try:
+            return Entry(raw_entry["name"], *raw_entry["name"])  # type: ignore
+        except KeyError:
+            raise ValueError(f"JSON schema incorrect: {raw_entry}") from None
 
     @property
     def entries(self) -> List[Entry]:
