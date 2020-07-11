@@ -15,9 +15,20 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 from whereis import Database, Entry, levels, utils
 from rich.table import Table
-from rich import print
+from rich.console import Console
 from pathlib import Path
 import fire  # type: ignore
+
+
+def _get_version() -> str:
+    return (Path(__file__).parent.parent / "VERSION").read_text().strip()
+
+
+VERSION_STRING: str = f"""[bold green4]  ---       [/]where-is {_get_version()} Copyright (C) 2020
+[bold green4] /          [/]Made by [underline]ALinuxPerson[/].
+[bold green4]<  ?
+ \\          [/][italic]This program comes with [bold]ABSOLUTELY NO WARRANTY[/]; This is free software,
+[bold green4]  ---       [/]and you are welcome to redistribute it under certain conditions."""
 
 
 def _check_for_db_entries(database: Database) -> bool:
@@ -93,7 +104,8 @@ def find(name: str, database_location: str = str(utils.config_folder())) -> None
 
 
 def show_version() -> None:
-    pass
+    console: Console = Console()
+    console.print(VERSION_STRING, style="blue")
 
 
 def cli(
@@ -104,7 +116,7 @@ def cli(
     Args:
         name: The name of the entry to search for.
         database_location: The database to search for the entry. Defaults to the where-is config folder.
-        version: Show this program's version number then exit.
+        version: Show this program's version number and credits then exit.
 
     Returns:
         Nothing.
