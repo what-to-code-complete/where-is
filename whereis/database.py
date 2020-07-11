@@ -176,11 +176,17 @@ class Database:
         Returns:
             A list of dictionaries if the file owning that dictionary's suffix is '.json'.
         """
-        return [
-            json.loads(entry.read_text())
-            for entry in self.location.iterdir()
-            if entry.suffix == ".json"
-        ]
+        ret: List[Dict[str, Union[str, List[List[str]]]]] = []
+        for entry in self.location.iterdir():
+            if entry.suffix == ".json":
+                try:
+                    ret.append(json.loads(entry.read_text()))
+                except json.decoder.JSONDecodeError as error:
+                    raise ValueError(
+                        f"Error parsing '{entry.absolute()}': {error}"
+                    ) from None
+
+        return ret
 
     @staticmethod
     def _entry_from_json(raw_entry: Dict[str, Union[str, List[List[str]]]]) -> Entry:
