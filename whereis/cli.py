@@ -18,6 +18,7 @@ from rich.table import Table
 from rich.console import Console
 from pathlib import Path
 import fire  # type: ignore
+from rich import print
 
 
 def _get_version() -> str:
