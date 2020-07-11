@@ -33,7 +33,11 @@ def find(name: str, database_location: str = str(utils.config_folder())) -> None
         try:
             database_location: Path = Path(database_location)  # type: ignore
             database: Database = Database(database_location)  # type: ignore
-            if not _check_for_db_entries(database):
+            try:
+                if not _check_for_db_entries(database):
+                    return
+            except ValueError as error:
+                levels.error(f"Parse failure: {error}")
                 return
             break
         except TypeError:
