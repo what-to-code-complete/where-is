@@ -196,7 +196,7 @@ class Database:
             KeyError: If the raw entry doesn't follow the json schema.
         """
         try:
-            return Entry(raw_entry["name"], *raw_entry["name"])  # type: ignore
+            return Entry(raw_entry["name"], *raw_entry["locations"])  # type: ignore
         except KeyError:
             raise ValueError(f"JSON schema incorrect: {raw_entry}") from None
 
