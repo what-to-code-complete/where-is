@@ -1,7 +1,7 @@
 {
   "name": "zsh",
   "locations": [
-    ["$HOME", ".zshrc"],
-    ["$HOME", ".zsh_profile"]
+    ["{HOME}", ".zshrc"],
+    ["{HOME}", ".zsh_profile"]
   ]
 }
