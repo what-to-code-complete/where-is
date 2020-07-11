@@ -17,7 +17,7 @@ from whereis import Database, Entry, levels, utils
 from rich.table import Table
 from rich import print
 from pathlib import Path
-import fire
+import fire  # type: ignore
 
 
 def _check_for_db_entries(database: Database) -> bool:
@@ -42,7 +42,7 @@ def find(name: str, database_location: str = str(utils.config_folder())) -> None
             )
             return
         except NotADirectoryError:
-            if database_location.exists():
+            if database_location.exists():  # type: ignore
                 levels.error(
                     "The database location exists and is a file. Either,\n"
                     "a.) Remove that file then try again, or\n"
@@ -51,6 +51,7 @@ def find(name: str, database_location: str = str(utils.config_folder())) -> None
                 return
             else:
                 levels.info("Database doesn't exist, creating.")
+                # noinspection PyUnboundLocalVariable
                 database.create()
     table: Table = Table(title="[bold]Config files found")
     table.add_column("Locations")
