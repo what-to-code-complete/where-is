@@ -27,5 +27,5 @@ setuptools.setup(
     packages=setuptools.find_packages(
         exclude=["tests", "*.tests", "*.tests.*", "tests.*"]
     ),
-    entry_points={"console_scripts": ["where-is=whereis:__main__.main"],},
+    entry_points={"console_scripts": ["where-is=whereis.__main__:main"],},
 )
