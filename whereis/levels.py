@@ -1,18 +1,4 @@
-# where-is: Finds config files.
-# Copyright (C) 2020 ALinuxPerson
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+"""Custom messages."""
 from typing import Literal, Dict
 from rich.console import Console
 import sys
@@ -36,10 +22,10 @@ def _levels(
         Nothing.
     """
     to_message: Dict[str, str] = {
-        "info": " [dark_blue]{icon} [blue]{line}",
-        "success": " [dark_green]{icon} [green4]{line}",
-        "warn": " [yellow]{icon} [yellow3]{line}",
-        "error": " [dark_red]{icon} [red]{line}",
+        "info": " [bold][dark_blue]{icon} [blue]{line}",
+        "success": " [bold][dark_green]{icon} [green4]{line}",
+        "warn": " [bold][yellow]{icon} [yellow3]{line}",
+        "error": " [bold][dark_red]{icon} [red]{line}",
     }
     icon: Dict[str, str] = {"info": "🛈", "success": "✓", "warn": "⚠", "error": "✗"}
 
@@ -114,3 +100,22 @@ def debug(message: str) -> None:
     """
     for line in message.splitlines():
         _console.log(f"[cyan]🔍 {line}")
+
+
+def _test_levels() -> None:
+    """Tests levels.
+
+    Returns:
+        Nothing.
+    """
+    levels = [info, success, warn, error, debug]
+    for level in levels:
+        level("Hello, World!")  # type: ignore
+        try:
+            level("No icon!", no_icon=True)  # type: ignore
+        except TypeError:
+            pass
+
+
+if __name__ == "__main__":
+    _test_levels()
