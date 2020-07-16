@@ -1,6 +1,11 @@
 <img src="other/logo.png" align="right" width="200" height="178" alt="Logo"/>
 
 # where-is
+[![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
+[![PyPI download month](https://img.shields.io/pypi/dm/where-is.svg)](https://pypi.python.org/pypi/where-is/)
+[![PyPI version shields.io](https://img.shields.io/pypi/v/where-is.svg)](https://pypi.python.org/pypi/where-is/)
+[![PyPI license](https://img.shields.io/pypi/l/where-is.svg)](https://pypi.python.org/pypi/where-is/)
+[![PyPI pyversions](https://img.shields.io/pypi/pyversions/where-is.svg)](https://pypi.python.org/pypi/where-is/)
 <p float="left">
   <img src="other/find.gif" width="330" height="255"
 </p>
