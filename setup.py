@@ -2,8 +2,8 @@ from typing import List, Dict
 import setuptools  # type: ignore
 import pathlib
 
-REQUIRED: List[str] = ["rich==3.1.0", "fire==0.3.1"]
-EXTRAS: Dict[str, List[str]] = {"dev": ["mypy==0.782"]}
+REQUIRED: List[str] = ["rich==3.1.0", "typer==0.3.0"]
+EXTRAS: Dict[str, List[str]] = {"dev": ["mypy==0.782", "pytest==5.4.3"]}
 
 setuptools.setup(
     name="where-is",
