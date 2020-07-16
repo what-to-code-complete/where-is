@@ -9,6 +9,7 @@ setuptools.setup(
     name="where-is",
     version=pathlib.Path("VERSION").read_text().strip(),
     description="Finds config files.",
+    long_description_content_type="text/markdown",
     long_description=pathlib.Path("README.md").read_text().strip(),
     author="ALinuxPerson",
     author_email="micheal02052007@gmail.com",
